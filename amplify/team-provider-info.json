@@ -1,0 +1,32 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-amplifyangular-dev-111505-authRole",
+      "UnauthRoleArn": "arn:aws:iam::415848371542:role/amplify-amplifyangular-dev-111505-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::415848371542:role/amplify-amplifyangular-dev-111505-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-amplifyangular-dev-111505-deployment",
+      "UnauthRoleName": "amplify-amplifyangular-dev-111505-unauthRole",
+      "StackName": "amplify-amplifyangular-dev-111505",
+      "StackId": "arn:aws:cloudformation:us-east-1:415848371542:stack/amplify-amplifyangular-dev-111505/e25aa200-2fc7-11eb-b07c-12ff7c2f10c5",
+      "AmplifyAppId": "d18aoe17fa9ty6"
+    },
+    "categories": {
+      "auth": {
+        "amplifyangular032dc09f": {
+          "userPoolId": "us-east-1_I1cHqxFbq",
+          "userPoolName": "angular-amplify-upool",
+          "webClientId": "34kc0tktidc1gk34mpivgisnp4",
+          "nativeClientId": "55ea3sr3giht7aulsek9856nk",
+          "identityPoolId": "us-east-1:d25c7bdd-fe3b-40bb-a3a3-6ee75a49d0d1",
+          "identityPoolName": "angular amplify ipool",
+          "allowUnauthenticatedIdentities": false,
+          "authRoleArn": "arn:aws:iam::415848371542:role/Cognito_angular_amplify_ipool_Auth_Role",
+          "authRoleName": "Cognito_angular_amplify_ipool_Auth_Role",
+          "unauthRoleArn": "arn:aws:iam::415848371542:role/Cognito_angular_amplify_ipool_Unauth_Role",
+          "unauthRoleName": "Cognito_angular_amplify_ipool_Unauth_Role"
+        }
+      }
+    }
+  }
+}
