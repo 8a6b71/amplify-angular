@@ -1,19 +1,17 @@
 {
-  "function": {},
-  "api": {},
-  "auth": {
-    "amplifyangular": {
-      "service": "Cognito",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [],
-      "customAuth": false
-    }
-  },
   "hosting": {
     "amplifyhosting": {
       "service": "amplifyhosting",
-      "type": "cicd",
-      "lastPushTimeStamp": "2020-11-26T15:33:00.558Z"
+      "type": "cicd"
+    }
+  },
+  "auth": {
+    "amplifyangular067ca38e": {
+      "service": "Cognito",
+      "serviceType": "imported",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
     }
   }
 }
