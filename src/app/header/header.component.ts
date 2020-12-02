@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     private readonly router: Router,
     private readonly authService: AuthService,
+    private readonly ref: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -22,10 +23,11 @@ export class HeaderComponent implements OnInit {
   }
 
   private listenAuthState(): void {
-    this.authService.authState
+    this.authService.loggedIn
       .pipe(untilDestroyed(this))
-      .subscribe( (userState) => {
-        this.isSignedIn = userState.isSignedIn;
+      .subscribe( (isSignedIn) => {
+        this.isSignedIn = isSignedIn;
+        this.ref.detectChanges();
       });
   }
 }

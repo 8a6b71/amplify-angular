@@ -1,42 +1,33 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import Auth from '@aws-amplify/auth';
-
-export interface AuthUsersState {
-  isSignedIn: boolean;
-  email: string | null;
-}
-
-const initialAuthState = {
-  isSignedIn: false,
-  email: null,
-};
+import { fromPromise } from 'rxjs/internal-compatibility';
+import { catchError, map } from 'rxjs/operators';
+import { CognitoUserInterface } from '@aws-amplify/ui-components';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  readonly authState = new BehaviorSubject<AuthUsersState>(initialAuthState);
+  readonly loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  readonly currentUser: BehaviorSubject<CognitoUserInterface | null> = new BehaviorSubject<CognitoUserInterface | null>(null);
 
   constructor() {}
 
-  async initAuthState(): Promise<void> {
-    await Auth.currentAuthenticatedUser().then((data) => {
-      const { attributes } = data;
-      const email = attributes ? attributes.email : null;
-      this.authState.next({ isSignedIn: true, email });
-    }).catch(() => {
-      this.authState.next(initialAuthState);
-    });
-  }
-
-  async isSignedId(): Promise<boolean> {
-    try {
-      return await Auth.currentAuthenticatedUser().then(() => {
-        return true;
-      });
-    } catch (e) {
-      return false;
-    }
+  isSignedIn(): Observable<boolean> {
+    return fromPromise(Auth.currentAuthenticatedUser())
+      .pipe(
+        map((result) => {
+          this.loggedIn.next(true);
+          const userData = result as CognitoUserInterface;
+          this.currentUser.next(userData);
+          return true;
+        }),
+        catchError(() => {
+          this.loggedIn.next(false);
+          this.currentUser.next(null);
+          return of(false);
+        })
+      );
   }
 }

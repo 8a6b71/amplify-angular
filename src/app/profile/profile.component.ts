@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
@@ -9,19 +9,25 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  user: string;
+  userEmail: string;
 
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly ref: ChangeDetectorRef,
+  ) {}
 
   ngOnInit(): void {
-    this.listenAuthUserState();
+    this.loadCurrentUser();
   }
 
-  private listenAuthUserState(): void {
-    this.authService.authState
+  private loadCurrentUser(): void {
+    this.authService.currentUser
       .pipe(untilDestroyed(this))
-      .subscribe( (state) => {
-        this.user = state.email;
+      .subscribe( (userData) => {
+        if (userData && userData.attributes) {
+          this.userEmail = userData.attributes.email || '';
+        }
+        this.ref.detectChanges();
       });
   }
 }

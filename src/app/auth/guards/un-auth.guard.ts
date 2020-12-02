@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,17 +13,19 @@ export class UnAuthGuard implements CanActivate {
     private readonly authService: AuthService
   ) { }
 
-  async canActivate(
+  canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Promise<boolean> {
+    state: RouterStateSnapshot): Observable<boolean> {
 
-    const isSignedIn = await this.authService.isSignedId();
-
-    if (isSignedIn) {
-      this.router.navigate(['/']);
-      return false;
-    } else {
-      return true;
-    }
+    return this.authService.isSignedIn().pipe(
+      map(loggedIn => {
+        if (loggedIn) {
+          this.router.navigate(['/']);
+          return false;
+        } else {
+          return true;
+        }
+      })
+    );
   }
 }

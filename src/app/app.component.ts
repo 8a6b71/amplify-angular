@@ -16,38 +16,24 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.initAuthState();
+    onAuthUIStateChange((authState, authData) => {
+      const userData = authData as CognitoUserInterface;
+      this.authService.currentUser.next(userData);
+      this.navigateOnAuthStateChange(authState);
+      this.ref.detectChanges();
+    });
   }
 
   ngOnDestroy(): (authStateHandler) => void {
     return onAuthUIStateChange;
   }
 
-  private async initAuthState(): Promise<void> {
-    await this.authService.initAuthState();
-    const previousIsSignInState = await this.authService.isSignedId();
-
-    await onAuthUIStateChange((authState, authData) => {
-      const currentState = authState === AuthState.SignedIn;
-      const data = authData as CognitoUserInterface;
-      const email = data && data.attributes ? data.attributes.email : null ;
-
-      this.authService.authState.next({
-        isSignedIn: currentState,
-        email
-      });
-
-      this.navigateOnAuthStateChange(previousIsSignInState, authState);
-      this.ref.detectChanges();
-    });
-  }
-
-  private navigateOnAuthStateChange(previousState: boolean, authState: AuthState): void {
-    if (!previousState && authState === AuthState.SignedIn) {
+  private navigateOnAuthStateChange(authState: AuthState): void {
+    if (authState === AuthState.SignedIn) {
       this.router.navigate(['']);
     }
 
-    if (previousState && authState === AuthState.SignedOut) {
+    if (authState === AuthState.SignedOut) {
       this.router.navigate(['/sign-in']);
     }
   }
