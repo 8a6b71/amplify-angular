@@ -1,0 +1,12 @@
+<amplify-authenticator [initialAuthState]="initialAuthState">
+  <amplify-sign-in slot="sign-in" usernameAlias="email">
+    <div slot="secondary-footer-content">
+      No account? <a routerLink="/sign-up">Create account</a>
+    </div>
+  </amplify-sign-in>
+  <amplify-sign-up slot="sign-up" usernameAlias="email">
+    <div slot="secondary-footer-content">
+      Have an account? <a routerLink="/sign-in"> Sign in</a>
+    </div>
+  </amplify-sign-up>
+</amplify-authenticator>
