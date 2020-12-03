@@ -31,9 +31,9 @@
           </mat-error>
         </mat-form-field>
 
-        <button mat-flat-button color="primary" type="submit" class="btn-submit" [disabled]="isSubmitting">
-          <span>SIGN IN</span>
-          <mat-spinner *ngIf="isSubmitting" [diameter]="20" class="mat-spinner"></mat-spinner>
+        <button mat-flat-button color="primary" type="submit" class="btn-submit" [disabled]="isSubmitInProcess">
+          <span>{{getSubmitButtonText()}}</span>
+          <mat-spinner *ngIf="isSubmitInProcess" [diameter]="20" class="mat-spinner"></mat-spinner>
         </button>
       </form>
     </mat-card-content>

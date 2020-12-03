@@ -17,7 +17,7 @@ export class SignInComponent implements OnInit {
   form: FormGroup;
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
-  isSubmitting = false;
+  isSubmitInProcess = false;
 
   constructor(
     private readonly router: Router,
@@ -32,16 +32,19 @@ export class SignInComponent implements OnInit {
   async signIn(): Promise<void> {
     if (this.form.valid) {
       try {
-        this.isSubmitting = true;
+        this.isSubmitInProcess = true;
         const {username, password} = this.form.value;
         await this.authService.signIn(username, password);
         this.router.navigate(['/']);
       } catch (error) {
-        console.log('error signing in', error);
         this.openSnackBar(error.message);
       }
-      this.isSubmitting = false;
+      this.isSubmitInProcess = false;
     }
+  }
+
+  getSubmitButtonText(): string {
+    return this.isSubmitInProcess ? 'Signing...' : 'Sign In';
   }
 
   private openSnackBar(message: string): void {
