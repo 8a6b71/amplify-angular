@@ -6,7 +6,6 @@ import { UnAuthGuard } from './auth/guards/un-auth.guard';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { InitialAuthState } from './auth/enums/initial-auth-state.enum';
-import { AdminComponent } from './admin/admin.component';
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
@@ -18,11 +17,6 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'admin',
-    component: AdminComponent,
     canActivate: [AuthGuard],
   },
   {

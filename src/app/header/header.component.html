@@ -1,13 +1,15 @@
-<mat-toolbar>
-  <a routerLink="/" class="logo-link">Amplify Sendbox App</a>
-  <div *ngIf="isSignedIn" class="right-menu">
-    <nav>
-      <ul class="nav-list">
-        <li><a routerLink="/">Home</a></li>
-        <li><a routerLink="/profile">Profile</a></li>
-        <li><a routerLink="/admin">Admin</a></li>
-      </ul>
-    </nav>
-    <amplify-sign-out></amplify-sign-out>
-  </div>
-</mat-toolbar>
+<header>
+  <mat-toolbar>
+    Amplify Sendbox App
+    <div class="right-menu">
+      <nav>
+        <ul class="nav-list">
+          <li><a routerLink="/">Home</a></li>
+          <li><a routerLink="/profile">Profile</a></li>
+        </ul>
+      </nav>
+      <amplify-sign-out></amplify-sign-out>
+    </div>
+  </mat-toolbar>
+</header>
+
