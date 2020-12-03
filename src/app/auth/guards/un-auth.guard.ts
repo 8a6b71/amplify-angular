@@ -17,7 +17,7 @@ export class UnAuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> {
 
-    return this.authService.isSignedIn().pipe(
+    return this.authService.isLoggedIn$.pipe(
       map(loggedIn => {
         if (loggedIn) {
           this.router.navigate(['/']);

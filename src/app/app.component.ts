@@ -25,11 +25,11 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     onAuthUIStateChange((authState, authData) => {
       const userData = authData as CognitoUserInterface;
-      this.authService.currentUser.next(userData);
+      this.authService.setUser(userData);
       this.navigateOnAuthStateChange(authState);
     });
 
-    this.listenAuthState();
+    this.listenIsLoggedIn();
   }
 
   ngOnDestroy(): (authStateHandler) => void {
@@ -43,8 +43,8 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
-  private listenAuthState(): void {
-    this.authService.loggedIn
+  private listenIsLoggedIn(): void {
+    this.authService.isLoggedIn$
       .pipe(untilDestroyed(this))
       .subscribe( (isSignedIn) => {
         this.isSignedIn = isSignedIn;

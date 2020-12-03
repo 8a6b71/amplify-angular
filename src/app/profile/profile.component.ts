@@ -21,11 +21,11 @@ export class ProfileComponent implements OnInit {
   }
 
   private loadCurrentUser(): void {
-    this.authService.currentUser
+    this.authService.authState$
       .pipe(untilDestroyed(this))
       .subscribe( (userData) => {
-        if (userData && userData.attributes) {
-          this.userEmail = userData.attributes.email || '';
+        if (userData && userData.email) {
+          this.userEmail = userData.email || '';
         }
         this.ref.detectChanges();
       });
