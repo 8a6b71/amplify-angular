@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from './auth/auth.service';
 import { AuthState, CognitoUserInterface, onAuthUIStateChange } from '@aws-amplify/ui-components';
 import { Router } from '@angular/router';
@@ -19,7 +19,6 @@ export class AppComponent implements OnInit, OnDestroy {
     private readonly router: Router,
     private readonly ngZone: NgZone,
     private readonly location: Location,
-    private readonly ref: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -48,7 +47,6 @@ export class AppComponent implements OnInit, OnDestroy {
       .pipe(untilDestroyed(this))
       .subscribe( (isSignedIn) => {
         this.isSignedIn = isSignedIn;
-        this.ref.detectChanges();
       });
   }
 }

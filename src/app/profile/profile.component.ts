@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
@@ -11,10 +11,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 export class ProfileComponent implements OnInit {
   userEmail: string;
 
-  constructor(
-    private readonly authService: AuthService,
-    private readonly ref: ChangeDetectorRef,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
   ngOnInit(): void {
     this.loadCurrentUser();
@@ -27,7 +24,6 @@ export class ProfileComponent implements OnInit {
         if (userData && userData.email) {
           this.userEmail = userData.email || '';
         }
-        this.ref.detectChanges();
       });
   }
 }

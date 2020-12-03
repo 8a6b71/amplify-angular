@@ -78,4 +78,13 @@ export class AuthService {
         return '';
     }
   }
+
+  async isSignedIn(): Promise<boolean> {
+    try {
+      await Auth.currentAuthenticatedUser();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }
