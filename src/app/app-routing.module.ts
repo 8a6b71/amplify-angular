@@ -44,6 +44,14 @@ const routes: Routes = [
     }
   },
   {
+    path: 'confirm-sign-up',
+    component: AuthenticatorComponent,
+    canActivate: [UnAuthGuard],
+    data: {
+      initialAuthState: InitialAuthState.ConfirmSignUp
+    }
+  },
+  {
     path: '**',
     component: NotFoundComponent
   },

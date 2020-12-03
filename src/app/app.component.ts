@@ -1,7 +1,8 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from './auth/auth.service';
 import { AuthState, CognitoUserInterface, onAuthUIStateChange } from '@aws-amplify/ui-components';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -11,8 +12,9 @@ import { Router } from '@angular/router';
 export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private readonly authService: AuthService,
-    private readonly ref: ChangeDetectorRef,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly ngZone: NgZone,
+    private readonly location: Location
   ) {}
 
   ngOnInit(): void {
@@ -20,7 +22,6 @@ export class AppComponent implements OnInit, OnDestroy {
       const userData = authData as CognitoUserInterface;
       this.authService.currentUser.next(userData);
       this.navigateOnAuthStateChange(authState);
-      this.ref.detectChanges();
     });
   }
 
@@ -29,12 +30,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private navigateOnAuthStateChange(authState: AuthState): void {
-    if (authState === AuthState.SignedIn) {
-      this.router.navigate(['']);
-    }
-
-    if (authState === AuthState.SignedOut) {
-      this.router.navigate(['/sign-in']);
+    const path = this.authService.getPathOnAuthStage(authState);
+    if (this.location.path() !== path && typeof path === 'string') {
+      this.ngZone.run(() => this.router.navigate([path]));
     }
   }
 }

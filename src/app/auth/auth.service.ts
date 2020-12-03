@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import Auth from '@aws-amplify/auth';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { catchError, map } from 'rxjs/operators';
-import { CognitoUserInterface } from '@aws-amplify/ui-components';
+import { AuthState, CognitoUserInterface } from '@aws-amplify/ui-components';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +29,27 @@ export class AuthService {
           return of(false);
         })
       );
+  }
+
+  getPathOnAuthStage(authState: AuthState): string {
+    switch (authState) {
+      case AuthState.SignIn:
+        return '/sign-in';
+
+      case AuthState.SignUp:
+        return '/sign-up';
+
+      case AuthState.ConfirmSignUp:
+        return '/confirm-sign-up';
+
+      case AuthState.SignedOut:
+        return '/sign-in';
+
+      case AuthState.ForgotPassword:
+        return '/forgot-password';
+
+      case AuthState.SignedIn:
+        return '';
+    }
   }
 }
