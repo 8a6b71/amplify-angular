@@ -52,4 +52,10 @@ export class AuthService {
         return '';
     }
   }
+
+  async signIn(username: string, password: string): Promise<CognitoUserInterface> {
+    const user = await Auth.signIn(username, password) as CognitoUserInterface;
+    this.currentUser.next(user);
+    return user;
+  }
 }

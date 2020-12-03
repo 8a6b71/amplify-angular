@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ProfileComponent } from './profile/profile.component';
-import { AuthenticatorComponent } from './auth/components/authenticator/authenticator.component';
 import { UnAuthGuard } from './auth/guards/un-auth.guard';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { InitialAuthState } from './auth/enums/initial-auth-state.enum';
 import { AdminComponent } from './admin/admin.component';
 import { HomeComponent } from './home/home.component';
+import { AuthenticatorComponent, SignInComponent } from './auth/components';
 
 const routes: Routes = [
   {
@@ -27,7 +27,7 @@ const routes: Routes = [
   },
   {
     path: 'sign-in',
-    component: AuthenticatorComponent,
+    component: SignInComponent,
     canActivate: [UnAuthGuard],
     data: {
       initialAuthState: InitialAuthState.SignIn

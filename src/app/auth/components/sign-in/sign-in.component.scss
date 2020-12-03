@@ -1,0 +1,32 @@
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-container {
+  flex-basis: 350px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  margin: 0 1rem;
+}
+
+.form-field {
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.btn-submit {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mat-spinner {
+  margin-left: 4px;
+  display: inline;
+  position: relative;
+  top: -2px;
+}
