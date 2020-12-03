@@ -28,11 +28,5 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatSnackBarModule,
     MatProgressSpinnerModule
   ],
-  exports: [
-    MatInputModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatSnackBarModule,
-  ]
 })
 export class AuthModule { }

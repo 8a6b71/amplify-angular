@@ -1,34 +1,60 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, } from 'rxjs';
 import Auth from '@aws-amplify/auth';
-import { fromPromise } from 'rxjs/internal-compatibility';
-import { catchError, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { AuthState, CognitoUserInterface } from '@aws-amplify/ui-components';
+import { Hub } from '@aws-amplify/core';
+
+export interface CurrentAuthState {
+  isLoggedIn: boolean;
+  username: string | null;
+  id: string | null;
+  email: string | null;
+}
+
+const initialAuthState: CurrentAuthState = {
+  isLoggedIn: false,
+  username: null,
+  id: null,
+  email: null
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  readonly loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  readonly currentUser: BehaviorSubject<CognitoUserInterface | null> = new BehaviorSubject<CognitoUserInterface | null>(null);
+  private readonly authState = new BehaviorSubject<CurrentAuthState>(initialAuthState);
 
-  constructor() {}
+  readonly authState$ = this.authState.asObservable();
+  readonly isLoggedIn$ = this.authState$.pipe(map(state => state.isLoggedIn));
 
-  isSignedIn(): Observable<boolean> {
-    return fromPromise(Auth.currentAuthenticatedUser())
-      .pipe(
-        map((result) => {
-          this.loggedIn.next(true);
-          const userData = result as CognitoUserInterface;
-          this.currentUser.next(userData);
-          return true;
-        }),
-        catchError(() => {
-          this.loggedIn.next(false);
-          this.currentUser.next(null);
-          return of(false);
-        })
-      );
+  constructor() {
+    Auth.currentAuthenticatedUser()
+      .then((user: any) => this.setUser(user))
+      .catch(() => {
+        this.authState.next(initialAuthState);
+      });
+
+    Hub.listen('auth', ({ payload: { event, data } }) => {
+      if (event === 'signIn') {
+        this.setUser(data);
+      } else {
+        this.authState.next(initialAuthState);
+      }
+    });
+  }
+
+  setUser(user: CognitoUserInterface): void {
+    if (!user) {
+      return;
+    }
+
+    const {
+      attributes: { sub: id, email },
+      username
+    } = user;
+
+    this.authState.next({ isLoggedIn: true, id, username, email });
   }
 
   getPathOnAuthStage(authState: AuthState): string {
@@ -55,7 +81,16 @@ export class AuthService {
 
   async signIn(username: string, password: string): Promise<CognitoUserInterface> {
     const user = await Auth.signIn(username, password) as CognitoUserInterface;
-    this.currentUser.next(user);
+    this.setUser(user);
     return user;
+  }
+
+  async isSignedIn(): Promise<boolean> {
+    try {
+      await Auth.currentAuthenticatedUser();
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

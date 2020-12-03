@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { InitialAuthState } from '../../enums/initial-auth-state.enum';
+import { AuthState } from '@aws-amplify/ui-components';
 
 @UntilDestroy()
 @Component({
@@ -10,7 +10,7 @@ import { InitialAuthState } from '../../enums/initial-auth-state.enum';
   styleUrls: ['./authenticator.component.scss']
 })
 export class AuthenticatorComponent implements OnInit {
-  initialAuthState: InitialAuthState = InitialAuthState.SignIn;
+  initialAuthState: AuthState = AuthState.SignIn;
 
   constructor(private readonly activatedRoute: ActivatedRoute) { }
 

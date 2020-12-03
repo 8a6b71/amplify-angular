@@ -4,9 +4,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { UnAuthGuard } from './auth/guards/un-auth.guard';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { InitialAuthState } from './auth/enums/initial-auth-state.enum';
-import { AdminComponent } from './admin/admin.component';
 import { HomeComponent } from './home/home.component';
+import { AuthState } from '@aws-amplify/ui-components';
 import { AuthenticatorComponent, SignInComponent } from './auth/components';
 
 const routes: Routes = [
@@ -21,16 +20,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'admin',
-    component: AdminComponent,
-    canActivate: [AuthGuard],
-  },
-  {
     path: 'sign-in',
     component: SignInComponent,
     canActivate: [UnAuthGuard],
     data: {
-      initialAuthState: InitialAuthState.SignIn
+      initialAuthState: AuthState.SignIn
     }
   },
   {
@@ -38,7 +32,7 @@ const routes: Routes = [
     component: AuthenticatorComponent,
     canActivate: [UnAuthGuard],
     data: {
-      initialAuthState: InitialAuthState.SignUp
+      initialAuthState: AuthState.SignUp
     }
   },
   {
@@ -46,7 +40,7 @@ const routes: Routes = [
     component: AuthenticatorComponent,
     canActivate: [UnAuthGuard],
     data: {
-      initialAuthState: InitialAuthState.ForgotPassword
+      initialAuthState: AuthState.ForgotPassword
     }
   },
   {
@@ -54,7 +48,7 @@ const routes: Routes = [
     component: AuthenticatorComponent,
     canActivate: [UnAuthGuard],
     data: {
-      initialAuthState: InitialAuthState.ConfirmSignUp
+      initialAuthState: AuthState.ConfirmSignUp
     }
   },
   {
