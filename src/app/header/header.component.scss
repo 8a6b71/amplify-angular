@@ -1,0 +1,23 @@
+a {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.right-menu {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+
+  li {
+    margin: 0 1rem;
+  }
+}
