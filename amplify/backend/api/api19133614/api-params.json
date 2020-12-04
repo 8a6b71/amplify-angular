@@ -1,0 +1,42 @@
+{
+    "paths": [
+        {
+            "name": "/auth",
+            "lambdaFunction": "amplifyangularf78f3167",
+            "privacy": {
+                "private": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ]
+            },
+            "policyResourceName": "/auth"
+        }
+    ],
+    "resourceName": "api19133614",
+    "apiName": "api19133614",
+    "functionArns": [
+        {
+            "lambdaFunction": "amplifyangularf78f3167"
+        }
+    ],
+    "privacy": {
+        "auth": 1,
+        "unauth": 0,
+        "authRoleName": "amplify-amplifyangular-dev-170404-authRole",
+        "unAuthRoleName": "amplify-amplifyangular-dev-170404-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "amplifyangularf78f3167",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}

@@ -15,11 +15,8 @@
     "emailVerificationSubject": "Your verification code",
     "emailVerificationMessage": "Your verification code is {####}",
     "defaultPasswordPolicy": true,
-    "passwordPolicyMinLength": "6",
-    "passwordPolicyCharacters": [
-        "Requires Lowercase",
-        "Requires Numbers"
-    ],
+    "passwordPolicyMinLength": 8,
+    "passwordPolicyCharacters": [],
     "requiredAttributes": [
         "email"
     ],
@@ -48,20 +45,23 @@
             "Arn"
         ]
     },
-    "useDefault": "manual",
-    "thirdPartyAuth": false,
+    "useDefault": "defaultSocial",
     "usernameAttributes": [
         "email"
     ],
     "userPoolGroups": false,
     "adminQueries": false,
     "triggers": "{}",
-    "hostedUI": false,
+    "hostedUI": true,
     "userPoolGroupList": [],
     "serviceName": "Cognito",
     "parentStack": {
         "Ref": "AWS::StackId"
     },
     "permissions": [],
-    "dependsOn": []
+    "dependsOn": [],
+    "hostedUIDomainName": "amplifyangularbf9b07bf-bf9b07bf",
+    "authProvidersUserPool": [],
+    "hostedUIProviderMeta": "[]",
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:4200/\",\"https://develop.d1sov3uy74fe7f.amplifyapp.com/\"],\"LogoutURLs\":[\"http://localhost:4200/sign-in/\",\"https://develop.d1sov3uy74fe7f.amplifyapp.com/\"]}"
 }
