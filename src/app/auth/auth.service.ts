@@ -44,19 +44,6 @@ export class AuthService {
     });
   }
 
-  setUser(user: CognitoUserInterface): void {
-    if (!user) {
-      return;
-    }
-
-    const {
-      attributes: { sub: id, email },
-      username
-    } = user;
-
-    this.authState.next({ isLoggedIn: true, id, username, email });
-  }
-
   getPathOnAuthStage(authState: AuthState): string {
     switch (authState) {
       case AuthState.SignIn:
@@ -76,9 +63,16 @@ export class AuthService {
 
       case AuthState.SignedIn:
         return '';
+
+      default:
+        return '';
     }
   }
 
+  /**
+   * Recommended to be used in guards.
+   * In other cases please use property `isLoggedIn$` {@link AuthService#isLoggedIn$}
+   */
   async isSignedIn(): Promise<boolean> {
     try {
       await Auth.currentAuthenticatedUser();
@@ -86,5 +80,18 @@ export class AuthService {
     } catch (e) {
       return false;
     }
+  }
+
+  private setUser(user: CognitoUserInterface): void {
+    if (!user) {
+      return;
+    }
+
+    const {
+      attributes: { sub: id, email },
+      username
+    } = user;
+
+    this.authState.next({ isLoggedIn: true, id, username, email });
   }
 }

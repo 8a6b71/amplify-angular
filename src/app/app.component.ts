@@ -1,6 +1,6 @@
 import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from './auth/auth.service';
-import { AuthState, CognitoUserInterface, onAuthUIStateChange } from '@aws-amplify/ui-components';
+import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -22,9 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    onAuthUIStateChange((authState, authData) => {
-      const userData = authData as CognitoUserInterface;
-      this.authService.setUser(userData);
+    onAuthUIStateChange((authState) => {
       this.navigateOnAuthStateChange(authState);
     });
 
