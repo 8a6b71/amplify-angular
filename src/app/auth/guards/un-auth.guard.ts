@@ -16,12 +16,6 @@ export class UnAuthGuard implements CanActivate {
     state: RouterStateSnapshot): Promise<boolean> {
 
     const isSignedIn = await this.authService.isSignedIn();
-
-    if (isSignedIn) {
-      this.router.navigate(['/']);
-      return false;
-    } else {
-      return true;
-    }
+    return isSignedIn ? this.router.navigate(['/']) : true;
   }
 }
