@@ -21,9 +21,7 @@ export class ProfileComponent implements OnInit {
     this.authService.authState$
       .pipe(untilDestroyed(this))
       .subscribe( (userData) => {
-        if (userData && userData.email) {
-          this.userEmail = userData.email || '';
-        }
+        this.userEmail = userData?.email ?? '';
       });
   }
 }
