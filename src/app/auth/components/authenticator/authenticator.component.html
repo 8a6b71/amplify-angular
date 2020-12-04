@@ -1,4 +1,4 @@
 <amplify-authenticator [initialAuthState]="initialAuthState">
   <amplify-sign-in slot="sign-in" usernameAlias="email"></amplify-sign-in>
-  <amplify-sign-up slot="sign-up" usernameAlias="email"></amplify-sign-up>
+  <amplify-sign-up slot="sign-up" usernameAlias="email" [formFields]="signUpFormFields"></amplify-sign-up>
 </amplify-authenticator>
