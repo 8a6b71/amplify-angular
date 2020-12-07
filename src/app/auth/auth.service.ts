@@ -29,18 +29,10 @@ export class AuthService {
   readonly isLoggedIn$ = this.authState$.pipe(map(state => state.isLoggedIn));
 
   constructor() {
-    Auth.currentAuthenticatedUser()
-      .then((user: any) => this.setUser(user))
-      .catch(() => {
-        this.authState.next(initialAuthState);
-      });
+    this.updateUserData();
 
     Hub.listen('auth', ({ payload: { event, data } }) => {
-      if (event === 'signIn') {
-        this.setUser(data);
-      } else {
-        this.authState.next(initialAuthState);
-      }
+      this.onAuthStateChange(event);
     });
   }
 
@@ -80,6 +72,34 @@ export class AuthService {
     } catch (e) {
       return false;
     }
+  }
+
+  private onAuthStateChange(event): void {
+    switch (event) {
+      case 'signIn':
+        this.updateUserData();
+        break;
+      case 'cognitoHostedUI':
+        this.updateUserData();
+        break;
+      case 'signOut':
+        this.authState.next(initialAuthState);
+        break;
+      case 'oAuthSignOut':
+        this.authState.next(initialAuthState);
+        break;
+      default:
+        this.updateUserData();
+        break;
+    }
+  }
+
+  private updateUserData(): void {
+    Auth.currentAuthenticatedUser()
+      .then((user: CognitoUserInterface) => this.setUser(user))
+      .catch(() => {
+        this.authState.next(initialAuthState);
+      });
   }
 
   private setUser(user: CognitoUserInterface): void {
