@@ -8,11 +8,11 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { ProfileComponent } from './profile/profile.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { HomeComponent } from './home/home.component';
+
 import { AmplifyUIAngularModule } from '@aws-amplify/ui-angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatListModule } from '@angular/material/list';
-import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,6 @@ import { HomeComponent } from './home/home.component';
     AmplifyUIAngularModule,
     BrowserAnimationsModule,
     MatToolbarModule,
-    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

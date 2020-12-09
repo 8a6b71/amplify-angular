@@ -1,9 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { BehaviorSubject, } from 'rxjs';
-import Auth from '@aws-amplify/auth';
+import { Auth } from '@aws-amplify/auth';
 import { map } from 'rxjs/operators';
-import { AuthState, CognitoUserInterface } from '@aws-amplify/ui-components';
+import { AuthState } from '@aws-amplify/ui-components';
 import { Hub } from '@aws-amplify/core';
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
+import { authStateToPathMap, authUIStateToPathMap } from '../constansts/auth-state-to-path-map.const';
+import { AuthStateEvents } from './enums/auth-state-events.enum';
 
 export interface CurrentAuthState {
   isLoggedIn: boolean;
@@ -28,37 +32,24 @@ export class AuthService {
   readonly authState$ = this.authState.asObservable();
   readonly isLoggedIn$ = this.authState$.pipe(map(state => state.isLoggedIn));
 
-  constructor() {
-    this.updateUserData();
+  constructor(
+    private readonly location: Location,
+    private readonly router: Router,
+    private readonly ngZone: NgZone
+  ) {}
 
-    Hub.listen('auth', ({ payload: { event, data } }) => {
-      this.onAuthStateChange(event);
+  async initHubListen(): Promise<void> {
+    await this.updateAuthState();
+
+    Hub.listen('UI Auth', ({ payload: { message} }) => {
+      if (message) {
+        this.onUIAuthStateChange(message as AuthState);
+      }
     });
-  }
 
-  getPathOnAuthStage(authState: AuthState): string {
-    switch (authState) {
-      case AuthState.SignIn:
-        return '/sign-in';
-
-      case AuthState.SignUp:
-        return '/sign-up';
-
-      case AuthState.ConfirmSignUp:
-        return '/confirm-sign-up';
-
-      case AuthState.SignedOut:
-        return '/sign-in';
-
-      case AuthState.ForgotPassword:
-        return '/forgot-password';
-
-      case AuthState.SignedIn:
-        return '';
-
-      default:
-        return '';
-    }
+    Hub.listen('auth', async ({ payload: { event}}) => {
+      await this.onAuthStateEventChange(event as AuthStateEvents);
+    });
   }
 
   /**
@@ -74,44 +65,56 @@ export class AuthService {
     }
   }
 
-  private onAuthStateChange(event): void {
-    switch (event) {
-      case 'signIn':
-        this.updateUserData();
-        break;
-      case 'cognitoHostedUI':
-        this.updateUserData();
-        break;
-      case 'signOut':
-        this.authState.next(initialAuthState);
-        break;
-      case 'oAuthSignOut':
-        this.authState.next(initialAuthState);
-        break;
-      default:
-        this.updateUserData();
-        break;
+  private onUIAuthStateChange(state: AuthState): void {
+    if (authUIStateToPathMap.has(state)) {
+      const path = authUIStateToPathMap.get(state);
+      this.ngZoneNavigate(path);
     }
   }
 
-  private updateUserData(): void {
-    Auth.currentAuthenticatedUser()
-      .then((user: CognitoUserInterface) => this.setUser(user))
-      .catch(() => {
-        this.authState.next(initialAuthState);
+  private async onAuthStateEventChange(state: AuthStateEvents): Promise<void> {
+    if (authStateToPathMap.has(state)) {
+      switch (state) {
+        case AuthStateEvents.SignIn:
+          await this.updateAuthState();
+          break;
+        case AuthStateEvents.OAuthSignOut:
+          this.authState.next(initialAuthState);
+          break;
+        case AuthStateEvents.SignOut:
+          this.authState.next(initialAuthState);
+          break;
+      }
+
+      const path = authStateToPathMap.get(state);
+      this.ngZoneNavigate(path);
+    }
+  }
+
+  private ngZoneNavigate(path: string): void {
+    if (this.location.path() !== path) {
+      this.ngZone.run(() => {
+        this.router.navigate([path]);
       });
+    }
   }
 
-  private setUser(user: CognitoUserInterface): void {
-    if (!user) {
-      return;
+  private async updateAuthState(): Promise<void> {
+    try {
+      const user = await Auth.currentUserInfo();
+
+      if (user) {
+        const {
+          attributes: { sub: id, email },
+          username
+        } = user;
+
+        this.authState.next({ isLoggedIn: true, username, email, id });
+      } else {
+        this.authState.next(initialAuthState);
+      }
+    } catch (e) {
+      this.authState.next(initialAuthState);
     }
-
-    const {
-      attributes: { sub: id, email },
-      username
-    } = user;
-
-    this.authState.next({ isLoggedIn: true, id, username, email });
   }
 }

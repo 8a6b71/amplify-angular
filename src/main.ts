@@ -1,7 +1,7 @@
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { Amplify } from 'aws-amplify';
 import aws_exports from './aws-exports';
+import { Auth } from '@aws-amplify/auth';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
@@ -42,4 +42,4 @@ const updatedAwsConfig = {
   }
 };
 
-Amplify.configure(updatedAwsConfig);
+Auth.configure(updatedAwsConfig);

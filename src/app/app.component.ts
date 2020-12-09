@@ -1,8 +1,5 @@
-import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth/auth.service';
-import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
-import { Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
@@ -11,33 +8,14 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit {
   isSignedIn = false;
 
-  constructor(
-    private readonly authService: AuthService,
-    private readonly router: Router,
-    private readonly ngZone: NgZone,
-    private readonly location: Location,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
   ngOnInit(): void {
-    onAuthUIStateChange((authState) => {
-      this.navigateOnAuthStateChange(authState);
-    });
-
+    this.authService.initHubListen();
     this.listenIsLoggedIn();
-  }
-
-  ngOnDestroy(): (authStateHandler) => void {
-    return onAuthUIStateChange;
-  }
-
-  private navigateOnAuthStateChange(authState: AuthState): void {
-    const path = this.authService.getPathOnAuthStage(authState);
-    if (this.location.path() !== path && typeof path === 'string') {
-      this.ngZone.run(() => this.router.navigate([path]));
-    }
   }
 
   private listenIsLoggedIn(): void {
