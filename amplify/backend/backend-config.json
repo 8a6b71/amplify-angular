@@ -14,27 +14,6 @@
       "lastPushTimeStamp": "2020-11-30T15:19:13.582Z"
     }
   },
-  "function": {
-    "amplifyangularf78f3167": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    }
-  },
-  "api": {
-    "api19133614": {
-      "service": "API Gateway",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "amplifyangularf78f3167",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        }
-      ]
-    }
-  }
+  "function": {},
+  "api": {}
 }

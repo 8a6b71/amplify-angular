@@ -165,15 +165,15 @@ Parameters:
     Type: String
   
             
-  hostedUIProviderCreds:
-    Type: String
-  
-            
   oAuthMetadata:
     Type: String
   
             
             
+  hostedUIProviderCreds:
+    Type: String
+    Default: '[]'
+  
 Conditions:
   ShouldNotCreateEnvResources: !Equals [ !Ref env, NONE ]
 
