@@ -7,12 +7,16 @@ import { AuthGuard } from './auth/guards/auth.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
 import { AuthState } from '@aws-amplify/ui-components';
+import { TruncateParamsGuard } from './auth/guards/truncate-params.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    canActivate: [AuthGuard],
+    canActivate: [
+      AuthGuard,
+      TruncateParamsGuard
+    ],
   },
   {
     path: 'profile',
