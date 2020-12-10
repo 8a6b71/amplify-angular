@@ -48,7 +48,7 @@ export class AuthService {
     });
 
     Hub.listen('auth', async ({ payload: { event}}) => {
-      await this.onAuthStateEventChange(event as AuthStateEvents);
+      await this.onAuthStateEvent(event as AuthStateEvents);
     });
   }
 
@@ -76,7 +76,7 @@ export class AuthService {
     }
   }
 
-  private async onAuthStateEventChange(state: AuthStateEvents): Promise<void> {
+  private async onAuthStateEvent(state: AuthStateEvents): Promise<void> {
     if (authStateToPathMap.has(state)) {
       switch (state) {
         case AuthStateEvents.SignIn:
