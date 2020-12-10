@@ -3,6 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { AuthState } from '@aws-amplify/ui-components';
 import { FormFieldTypes } from '@aws-amplify/ui-components';
+import { AuthService } from '../../auth.service';
+import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @UntilDestroy()
 @Component({
@@ -14,11 +17,23 @@ export class AuthenticatorComponent implements OnInit {
   initialAuthState: AuthState = AuthState.SignIn;
   signUpFormFields: FormFieldTypes;
 
-  constructor(private readonly activatedRoute: ActivatedRoute) { }
+  constructor(
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly authService: AuthService,
+    private snackBar: MatSnackBar
+  ) { }
 
   ngOnInit(): void {
     this.buildSignUpFormFields();
     this.listenRouterData();
+  }
+
+  async signInWithGoogle(): Promise<void> {
+    try {
+      await this.authService.federatedSignIn(CognitoHostedUIIdentityProvider.Google);
+    } catch (err) {
+      this.snackBar.open(err.message, 'Undo');
+    }
   }
 
   private buildSignUpFormFields(): void {

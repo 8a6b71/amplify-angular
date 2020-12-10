@@ -13,6 +13,8 @@ import { HomeComponent } from './home/home.component';
 import { AmplifyUIAngularModule } from '@aws-amplify/ui-angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/material/snack-bar';
+import { snackBarConfig } from './constansts/snack-bar-config.const';
 
 @NgModule({
   declarations: [
@@ -29,8 +31,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     AmplifyUIAngularModule,
     BrowserAnimationsModule,
     MatToolbarModule,
+    MatSnackBarModule
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: snackBarConfig }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

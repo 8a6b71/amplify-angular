@@ -1,13 +1,13 @@
 import { Injectable, NgZone } from '@angular/core';
 import { BehaviorSubject, } from 'rxjs';
-import { Auth } from '@aws-amplify/auth';
 import { map } from 'rxjs/operators';
-import { AuthState } from '@aws-amplify/ui-components';
-import { Hub } from '@aws-amplify/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
-import { authStateToPathMap, authUIStateToPathMap } from '../constansts/auth-state-to-path-map.const';
+import { AuthState } from '@aws-amplify/ui-components';
+import { Hub } from '@aws-amplify/core';
+import { Auth, CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { AuthStateEvents } from './enums/auth-state-events.enum';
+import { authStateToPathMap, authUIStateToPathMap } from '../constansts/auth-state-to-path-map.const';
 
 export interface CurrentAuthState {
   isLoggedIn: boolean;
@@ -63,6 +63,10 @@ export class AuthService {
     } catch (e) {
       return false;
     }
+  }
+
+  async federatedSignIn(provider: CognitoHostedUIIdentityProvider): Promise<void> {
+    await Auth.federatedSignIn({provider});
   }
 
   private onUIAuthStateChange(state: AuthState): void {
