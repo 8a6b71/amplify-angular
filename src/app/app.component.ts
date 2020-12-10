@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from './auth/auth.service';
+import { AuthRedirectService, AuthService } from './auth/services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
@@ -11,10 +11,14 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 export class AppComponent implements OnInit {
   isSignedIn = false;
 
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly authRedirectService: AuthRedirectService,
+  ) {}
 
   ngOnInit(): void {
-    this.authService.initHubListen();
+    this.authService.initStateChangeSubscription();
+    this.authRedirectService.initStateChangeSubscription();
     this.listenIsLoggedIn();
   }
 

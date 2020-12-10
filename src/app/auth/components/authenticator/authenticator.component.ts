@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { AuthState } from '@aws-amplify/ui-components';
 import { FormFieldTypes } from '@aws-amplify/ui-components';
-import { AuthService } from '../../auth.service';
+import { AuthService } from '../../services';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
