@@ -7,7 +7,7 @@ import { AuthGuard } from './auth/guards/auth.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
 import { AuthState } from '@aws-amplify/ui-components';
-import { TruncateParamsGuard } from './auth/guards/truncate-params.guard';
+import { TruncateOAuthQueryParamsGuard } from './auth/guards/truncate-o-auth-query-params.guard';
 
 const routes: Routes = [
   {
@@ -15,7 +15,7 @@ const routes: Routes = [
     component: HomeComponent,
     canActivate: [
       AuthGuard,
-      TruncateParamsGuard
+      TruncateOAuthQueryParamsGuard
     ],
   },
   {
