@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { BehaviorSubject, } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Hub } from '@aws-amplify/core';
@@ -29,7 +29,7 @@ export class AuthService {
   readonly isLoggedIn$ = this.authState$.pipe(map(state => state.isLoggedIn));
   private isStateSubscriptionActive = false;
 
-  constructor() {
+  constructor(private readonly ngZone: NgZone) {
     this.updateAuthState();
   }
 
@@ -62,12 +62,12 @@ export class AuthService {
     await Auth.federatedSignIn({provider});
   }
 
-  private async syncStateOnAuthEvent(state: AuthStateEvents): Promise<void> {
+  private syncStateOnAuthEvent(state: AuthStateEvents): void {
     switch (state) {
       case AuthStateEvents.SignIn:
       case AuthStateEvents.OAuthSignOut:
       case AuthStateEvents.SignOut:
-        await this.updateAuthState();
+        this.ngZone.run(async () => await this.updateAuthState());
         break;
     }
   }

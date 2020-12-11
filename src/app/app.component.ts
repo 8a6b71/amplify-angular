@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthRedirectService, AuthService } from './auth/services';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Observable } from 'rxjs';
 
-@UntilDestroy()
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  isSignedIn = false;
+  isSignedIn: Observable<boolean>;
 
   constructor(
     private readonly authService: AuthService,
@@ -19,14 +18,6 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.authService.initStateChangeSubscription();
     this.authRedirectService.initStateChangeSubscription();
-    this.listenIsLoggedIn();
-  }
-
-  private listenIsLoggedIn(): void {
-    this.authService.isLoggedIn$
-      .pipe(untilDestroyed(this))
-      .subscribe( (isSignedIn) => {
-        this.isSignedIn = isSignedIn;
-      });
+    this.isSignedIn = this.authService.isLoggedIn$;
   }
 }

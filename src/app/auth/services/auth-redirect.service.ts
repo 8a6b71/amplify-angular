@@ -31,8 +31,8 @@ export class AuthRedirectService {
       }
     });
 
-    Hub.listen('auth', async ({ payload: { event}}) => {
-      await this.navigateOnAuthStateChange(event as AuthStateEvents);
+    Hub.listen('auth', ({ payload: { event}}) => {
+      this.navigateOnAuthStateChange(event as AuthStateEvents);
     });
 
     this.isStateSubscriptionActive = true;
@@ -45,7 +45,7 @@ export class AuthRedirectService {
     }
   }
 
-  private async navigateOnAuthStateChange(state: AuthStateEvents): Promise<void> {
+  private navigateOnAuthStateChange(state: AuthStateEvents): void {
     if (hasOwnProperty.call(authStateToPath, state)) {
       const path = authStateToPath[state];
       this.ngZoneNavigate(path);
