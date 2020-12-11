@@ -6,7 +6,7 @@ import { Hub } from '@aws-amplify/core';
 
 import { AuthStateEvents } from '../enums/auth-state-events.enum';
 import { authStateToPath, authUIStateToPath } from '../../constansts/auth-state-to-path.const';
-import { hasOwnProperty } from '../../../helpers/hasOwnProperty';
+import has from 'lodash/has';
 
 @Injectable({
   providedIn: 'root'
@@ -39,14 +39,14 @@ export class AuthRedirectService {
   }
 
   private navigateOnUIAuthStateChange(state: AuthState): void {
-    if (hasOwnProperty.call(authUIStateToPath, state)) {
+    if (has(authUIStateToPath, state)) {
       const path = authUIStateToPath[state];
       this.ngZoneNavigate(path);
     }
   }
 
   private navigateOnAuthStateChange(state: AuthStateEvents): void {
-    if (hasOwnProperty.call(authStateToPath, state)) {
+    if (has(authStateToPath, state)) {
       const path = authStateToPath[state];
       this.ngZoneNavigate(path);
     }

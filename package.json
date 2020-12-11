@@ -24,6 +24,7 @@
     "@aws-amplify/ui-angular": "^0.4.13",
     "@ngneat/until-destroy": "^8.0.3",
     "aws-amplify": "^3.3.10",
+    "lodash": "^4.17.20",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
