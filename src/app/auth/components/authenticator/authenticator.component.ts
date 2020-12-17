@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormFieldTypes } from '@aws-amplify/ui-components';
+import { ActivatedRoute } from '@angular/router';
+import { AuthState, FormFieldTypes } from '@aws-amplify/ui-components';
 
 @Component({
   selector: 'app-authenticator',
@@ -8,6 +9,7 @@ import { FormFieldTypes } from '@aws-amplify/ui-components';
   ]
 })
 export class AuthenticatorComponent implements OnInit {
+  initialAuthState: AuthState = AuthState.SignIn;
   signUpFormFields: FormFieldTypes = [
     {
       type: 'email',
@@ -23,6 +25,9 @@ export class AuthenticatorComponent implements OnInit {
     }
   ];
 
+  constructor(private readonly activatedRoute: ActivatedRoute) { }
+
   ngOnInit(): void {
+    this.initialAuthState = this.activatedRoute.snapshot.data.initialAuthState;
   }
 }
