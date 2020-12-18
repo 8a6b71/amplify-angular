@@ -1,6 +1,6 @@
 {
   "auth": {
-    "amplifyangular21f48dba21f48dba": {
+    "amplifyangular50b5c87950b5c879": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
