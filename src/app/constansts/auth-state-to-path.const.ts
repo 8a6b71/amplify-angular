@@ -4,7 +4,6 @@ import { AuthStateEvents } from '../auth/enums/auth-state-events.enum';
 export const authUIStateToPath = {
   [AuthState.SignIn]: '/sign-in',
   [AuthState.SignUp]: '/sign-up',
-  [AuthState.ConfirmSignUp]: '/confirm-sign-up',
   [AuthState.ForgotPassword]: '/forgot-password',
 };
 
