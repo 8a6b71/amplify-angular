@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "amplifyangularafaeb363_identitypool_afaeb363",
+    "identityPoolName": "amplifyangular50b5c879_identitypool_50b5c879",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "amplifffd8ff96",
-    "userPoolName": "amplifyangularafaeb363_userpool_afaeb363",
+    "resourceNameTruncated": "amplif50b5c879",
+    "userPoolName": "amplifyangular50b5c879_userpool_50b5c879",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -31,10 +31,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "amplifffd8ff96_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "amplif50b5c879_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "ffd8ff96",
-    "resourceName": "amplifyangularafaeb363afaeb363",
+    "sharedId": "50b5c879",
+    "resourceName": "amplifyangular50b5c87950b5c879",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -49,28 +49,19 @@
         ]
     },
     "useDefault": "manual",
-    "thirdPartyAuth": true,
+    "thirdPartyAuth": false,
     "usernameAttributes": [
         "email"
     ],
     "userPoolGroups": false,
     "adminQueries": false,
     "triggers": "{}",
-    "hostedUI": true,
+    "hostedUI": false,
     "userPoolGroupList": [],
     "serviceName": "Cognito",
     "parentStack": {
         "Ref": "AWS::StackId"
     },
     "permissions": [],
-    "dependsOn": [],
-    "authProviders": [
-        "accounts.google.com"
-    ],
-    "hostedUIDomainName": "amplifyangular0fe42235-0fe42235",
-    "authProvidersUserPool": [
-        "Google"
-    ],
-    "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://localhost:4200/\"],\"LogoutURLs\":[\"https://localhost:4200/sign-in/\"]}"
+    "dependsOn": []
 }
