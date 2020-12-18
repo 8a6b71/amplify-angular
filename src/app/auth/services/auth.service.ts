@@ -1,5 +1,5 @@
 import { Injectable, NgZone } from '@angular/core';
-import { Auth } from '@aws-amplify/auth';
+import { Auth, CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { Hub } from '@aws-amplify/core';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -88,5 +88,9 @@ export class AuthService {
     } catch (e) {
       this.authState.next(initialAuthState);
     }
+  }
+
+  async federatedSignIn(provider: CognitoHostedUIIdentityProvider): Promise<void> {
+    await Auth.federatedSignIn({provider});
   }
 }

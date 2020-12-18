@@ -1,3 +1,8 @@
-<amplify-authenticator [initialAuthState]="initialAuthState" usernameAlias="email">
+<amplify-authenticator [initialAuthState]="initialAuthState">
+  <amplify-sign-in slot="sign-in" usernameAlias="email">
+    <amplify-sign-in-button slot="federated-buttons" provider="google" (click)="signInWithGoogle()">
+      Sign in with Google
+    </amplify-sign-in-button>
+  </amplify-sign-in>
   <amplify-sign-up slot="sign-up" [formFields]="signUpFormFields" usernameAlias="email"></amplify-sign-up>
 </amplify-authenticator>

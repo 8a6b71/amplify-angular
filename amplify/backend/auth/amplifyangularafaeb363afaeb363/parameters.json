@@ -1,7 +1,7 @@
 {
     "identityPoolName": "amplifyangularafaeb363_identitypool_afaeb363",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "amplifafaeb363",
+    "resourceNameTruncated": "amplifffd8ff96",
     "userPoolName": "amplifyangularafaeb363_userpool_afaeb363",
     "autoVerifiedAttributes": [
         "email"
@@ -31,9 +31,9 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "amplifafaeb363_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "amplifffd8ff96_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "afaeb363",
+    "sharedId": "ffd8ff96",
     "resourceName": "amplifyangularafaeb363afaeb363",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
@@ -49,19 +49,28 @@
         ]
     },
     "useDefault": "manual",
-    "thirdPartyAuth": false,
+    "thirdPartyAuth": true,
     "usernameAttributes": [
         "email"
     ],
     "userPoolGroups": false,
     "adminQueries": false,
     "triggers": "{}",
-    "hostedUI": false,
+    "hostedUI": true,
     "userPoolGroupList": [],
     "serviceName": "Cognito",
     "parentStack": {
         "Ref": "AWS::StackId"
     },
     "permissions": [],
-    "dependsOn": []
+    "dependsOn": [],
+    "authProviders": [
+        "accounts.google.com"
+    ],
+    "hostedUIDomainName": "amplifyangular0fe42235-0fe42235",
+    "authProvidersUserPool": [
+        "Google"
+    ],
+    "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://localhost:4200/\"],\"LogoutURLs\":[\"https://localhost:4200/sign-in/\"]}"
 }
