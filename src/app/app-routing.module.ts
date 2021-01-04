@@ -42,14 +42,6 @@ const routes: Routes = [
     }
   },
   {
-    path: 'confirm-sign-up',
-    component: AuthenticatorComponent,
-    canActivate: [GuestGuard],
-    data: {
-      initialAuthState: AuthState.ConfirmSignUp
-    }
-  },
-  {
     path: '**',
     component: NotFoundComponent
   },
