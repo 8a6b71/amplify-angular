@@ -1,0 +1,11 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-amplifyangular-dev-180949-deployment",
+      "StackName": "amplify-amplifyangular-dev-180949",
+      "StackId": "arn:aws:cloudformation:us-east-1:415848371542:stack/amplify-amplifyangular-dev-180949/77fdb380-414b-11eb-9ad6-1260e6a1f297",
+      "AmplifyAppId": "d3cn5al4yj8zpw"
+    }
+  }
+}
