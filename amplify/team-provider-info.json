@@ -16,6 +16,12 @@
         "amplifyangular50b5c87950b5c879": {
           "googleClientId": "317586454100-47enj6kq5uvf2u63amgou80d79oluckg.apps.googleusercontent.com"
         }
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d3cn5al4yj8zpw",
+          "type": "cicd"
+        }
       }
     }
   }
